@@ -1,0 +1,27 @@
+service: aws-python3 # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: python3.6
+
+# you can overwrite defaults here
+stage: production
+functions:
+  inseresqs:
+    handler: handler.handler
+    events:
+      - http:
+          path: /inseresqs
+          method: post
+  imprimeMensagens:
+    handler: handler.imprime
+    events:
+      - http:
+          path: /imprime
+          method: get
+  publicaMensagens:
+    handler: handler.publica
+    events:
+      - http:
+          path: /publica
+          method: get
