@@ -1,0 +1,25 @@
+service: api-gateway-terraform # NOTE: update this with your service name
+
+custom:
+  stage: ${opt:stage, dev}
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: ${self:custom.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+      Resource: "arn:aws:sqs:us-east-1:*:SQS_principal*"
+  environment:
+    sqs_consulta: ${file(../arns-${self:custom.stage}.json):SQS_principal_URL.value}
+# you can overwrite defaults here
+stage: dev
+functions:
+  inseresqs:
+    handler: handler.handler
+    events:
+      - http:
+          path: /inseresqs
+          method: post
