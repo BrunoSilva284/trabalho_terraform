@@ -24,6 +24,10 @@ resource "aws_sqs_queue" "sqs_dlq" {
   }
 }
 
+data "aws_sqs_queue" "sqs_dlq" {
+  name = "SQS_DLQ_${terraform.workspace}"
+}
+
 #Topico SNS
 resource "aws_sns_topic" "sns_email" {
   name = "SNS_email_${terraform.workspace}"

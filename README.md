@@ -20,3 +20,10 @@
 *  terraform plan
 *  terraform apply -auto-approve
 *  terraform output -json > ../serverless/arns.json
+*  cd ..
+*  cd serverless/lambda-sqs-to-sns
+*  virtualenv ~/venv
+*  source ~/venv/bin/activate
+*  pip3 install -r requirements.txt -t layer
+*  sls deploy
+*  sls invoke -l -f sqsHandler
