@@ -90,3 +90,10 @@ pip3 install -r requirements.txt -t layer
 sls deploy --stage $wks
 sls invoke -l -f sqsHandler --stage $wks
 ```
+
+* Iniciar as aplicações serverless - api-gateway-terraform:
+```sh
+cd apigateway
+pip3 install -r requirements.txt -t layer
+sls deploy --stage $wks
+```
