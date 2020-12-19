@@ -13,6 +13,7 @@ resource "aws_sqs_queue" "sqs_principal" {
 
 data "aws_sqs_queue" "sqs_principal" {
   name = "SQS_principal_${terraform.workspace}"
+  depends_on = [aws_sqs_queue.sqs_principal]  
 }
 
 
@@ -26,6 +27,7 @@ resource "aws_sqs_queue" "sqs_dlq" {
 
 data "aws_sqs_queue" "sqs_dlq" {
   name = "SQS_DLQ_${terraform.workspace}"
+  depends_on = [aws_sqs_queue.sqs_dlq]  
 }
 
 #Topico SNS
