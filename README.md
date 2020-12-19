@@ -43,7 +43,9 @@ cd ..
 ```
 
 * Iniciar as duas filas SQS e o SNS:
+
 *OBS*: O último comando cria um arquivo com os ARNs e URLs dos serviços criados para uso posterior.
+
 ```sh
 terraform plan
 terraform apply -auto-approve
