@@ -1,11 +1,13 @@
 import json
-
+from sqsHandler import SqsHandler
 
 def handler(event, context):
-    usuario = event['pathParameters']['usuario'];
     
+    msg = event['body'];
+    sqs = SqsHandler('https://sqs.us-east-1.amazonaws.com/498552288851/SQS_principal_prod')
+    sqs.send(msg)
     body = {
-        "message": "O usuario enviado foi: " + str(usuario)
+        "message": "a mensagem capturada foi: " + str(msg)
     }
 
     response = {
