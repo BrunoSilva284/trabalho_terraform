@@ -1,7 +1,7 @@
 from sqsHandler import SqsHandler
 from env import Variables
 import json
-
+import time
 
 def handler(event, context):
     env = Variables()
@@ -13,7 +13,8 @@ def handler(event, context):
     if('Messages' in msgs and len(msgs['Messages'])>0):
         print("itens identificados para a impressao:")
         for msg in msgs['Messages']:
+            time.sleep(3)
             print(msg['Body'])
-            sqs.deleteMessage(msg['ReceiptHandle'])
+            #sqs.deleteMessage(msg['ReceiptHandle'])
     else:
         print("nao existem itens para a impressao..")
