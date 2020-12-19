@@ -1,0 +1,23 @@
+service: lambda-sqs-to-sns
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: dev
+  memorySize: 128
+  timeout: 300
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:ChangeMessageVisibility
+        - sqs:DeleteMessage
+        - sqs:ReceiveMessage
+        - sqs:SendMessage
+      Resource: ${file(../arns.json):SQS_DLQ_ARN.value}
+  environment:
+    sqs_consulta: ${file(../arns.json):SQS_DLQ_URL.value}
+    sns_dest: ${file(../arns.json):SNS_EMAIL_ARN.value}
+    
+functions:
+  sqsHandler:
+    handler: handler.handler
