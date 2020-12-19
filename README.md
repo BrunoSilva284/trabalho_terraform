@@ -73,11 +73,19 @@ terraform output -json > ../serverless/arns-${wks}.json
 cd ..
 ```
 
-* Iniciar as aplicações serverless:
+* Iniciar as aplicações serverless - lambda-sqs-to-sns:
 ```sh
 cd serverless/lambda-sqs-to-sns
 virtualenv ~/venv
 source ~/venv/bin/activate
+pip3 install -r requirements.txt -t layer
+sls deploy --stage $wks
+sls invoke -l -f sqsHandler --stage $wks
+cd ..
+```
+* Iniciar as aplicações serverless - lambda-sqs-print:
+```sh
+cd lambda-sqs-print
 pip3 install -r requirements.txt -t layer
 sls deploy --stage $wks
 sls invoke -l -f sqsHandler --stage $wks
