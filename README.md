@@ -17,6 +17,8 @@
 
 # Passos para rodar a aplicação:
 
+############### S3 ##################
+
 * Realize o clone do seguinte repositório:
 ```sh
 git clone https://github.com/BrunoSilva284/trabalho_terraform.git
@@ -47,6 +49,7 @@ terraform plan
 terraform apply -auto-approve
 cd ..
 ```
+############### Terraforms ##################
 
 * Iniciar as duas filas SQS e o SNS:
 
@@ -73,7 +76,11 @@ terraform output -json > ../serverless/arns-${wks}.json
 cd ..
 ```
 
-* Iniciar as aplicações serverless - lambda-sqs-to-sns:
+############### ServLess ##################
+
+(OBS a variavel $wks pode ser informada manualmente conforme o ambiente de trabalho)
+
+* Iniciar as aplicações serverless - lambda-sqs-to-sns: 
 ```sh
 cd serverless/lambda-sqs-to-sns
 virtualenv ~/venv
