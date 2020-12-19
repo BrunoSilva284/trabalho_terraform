@@ -1,9 +1,12 @@
 service: lambda-sqs-to-sns
 
+custom:
+  stage: ${opt:stage, dev}
+
 provider:
   name: aws
   runtime: python3.8
-  stage: ${wks}
+  stage: ${self:custom.stage}
   memorySize: 128
   timeout: 300
   iamRoleStatements:
@@ -13,10 +16,10 @@ provider:
         - sqs:DeleteMessage
         - sqs:ReceiveMessage
         - sqs:SendMessage
-      Resource: ${file(../arns-${wks}.json):SQS_DLQ_ARN.value}
+      Resource: ${file(../arns-${self:custom.stage}.json):SQS_DLQ_ARN.value}
   environment:
-    sqs_consulta: ${file(../arns-${wks}.json):SQS_DLQ_URL.value}
-    sns_dest: ${file(../arns-${wks}.json):SNS_EMAIL_ARN.value}
+    sqs_consulta: ${file(../arns-${self:custom.stage}.json):SQS_DLQ_URL.value}
+    sns_dest: ${file(../arns-${self:custom.stage}.json):SNS_EMAIL_ARN.value}
     
 functions:
   sqsHandler:

@@ -30,6 +30,7 @@ terraform init
 * Nesse ponto é recomendado selecionar o workspace e guardar seu nome em uma variável:
 ```sh
 terraform workspace new prod
+terraform workspace select prod
 wks=$(terraform workspace show)
 ```
 
@@ -60,6 +61,6 @@ cd serverless/lambda-sqs-to-sns
 virtualenv ~/venv
 source ~/venv/bin/activate
 pip3 install -r requirements.txt -t layer
-sls deploy
-sls invoke -l -f sqsHandler
+sls deploy --stage $wks
+sls invoke -l -f sqsHandler --stage $wks
 ```
