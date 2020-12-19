@@ -12,7 +12,7 @@
  
 ## Serverless:
 * TODO
-* Lambda sqs-to-sns
+* Lambda SNS para envio de email
 
 
 # Passos para rodar a aplicação:
@@ -22,23 +22,30 @@
 git clone https://github.com/BrunoSilva284/trabalho_terraform.git
 ```
 
-* Navegar até a pasta do projeto terraform e iniciá-lo:
+* Navegar até a pasta do projeto terraform/S3 para iniciar o Bucket:
 ```sh
-cd trabalho_terraform/terraform/
-terraform init
+cd trabalho_terraform/terraform/S3
 ```
-* Nesse ponto é recomendado selecionar o workspace e guardar seu nome em uma variável:
+* Altere a propriedade ```bucket``` e ```Name ``` com um nome unico e salve o arquivo:
 ```sh
+#Bucket para estado remoto
+resource "aws_s3_bucket" "bucket" {
+  bucket = "<nome-unico-bucket>"
+  acl    = "private"
+
+  tags = {
+    Name        = "<nome-unico-bucket>"
+    Environment = "admin"
+  }
+}
+```
+ 
+* inicie o S3  e guardar seu nome em uma variável
+```sh
+terraform init
 terraform workspace new prod
 terraform workspace select prod
 wks=$(terraform workspace show)
-```
-
-* Navegar até a pasta do S3 e inicia-lo:
-```sh
-cd S3/
-terraform init
-terraform workspace new $wks
 terraform plan
 terraform apply -auto-approve
 cd ..
@@ -46,9 +53,22 @@ cd ..
 
 * Iniciar as duas filas SQS e o SNS:
 
+*Antes de iniciar, altere o arquivo /trabalho_terraform/terraform/state.tf altere a propriedade bucket com o nome unico do passo anterior.
+```sh
+terraform {
+  backend "s3" {
+    bucket = "<nome-unico-bucket>"
+    key    = "trab-final"
+    region = "us-east-1"
+  }
+}
+```
 *OBS*: O último comando cria um arquivo com os ARNs e URLs dos serviços criados para uso posterior.
 
 ```sh
+terraform init
+terraform workspace new $wks
+terraform workspace select $wks
 terraform plan
 terraform apply -auto-approve
 terraform output -json > ../serverless/arns-${wks}.json
