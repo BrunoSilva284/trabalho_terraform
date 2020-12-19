@@ -13,4 +13,5 @@ def handler(event, context):
     
     #Itera o array e deleta ela do tópico usando o ReceiptHandle
     for msg in mensagens['Messages']:
+        #Aqui deve enviar para o SNS e depois excluir
         sqs.deleteMessage(msg['ReceiptHandle'])
