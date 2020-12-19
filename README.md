@@ -43,9 +43,6 @@ resource "aws_s3_bucket" "bucket" {
 * inicie o S3  e guardar seu nome em uma variável
 ```sh
 terraform init
-terraform workspace new prod
-terraform workspace select prod
-wks=$(terraform workspace show)
 terraform plan
 terraform apply -auto-approve
 cd ..
@@ -67,8 +64,9 @@ terraform {
 
 ```sh
 terraform init
-terraform workspace new $wks
-terraform workspace select $wks
+terraform workspace new prod
+terraform workspace select prod
+wks=$(terraform workspace show) 
 terraform plan
 terraform apply -auto-approve
 terraform output -json > ../serverless/arns-${wks}.json
