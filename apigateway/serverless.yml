@@ -3,9 +3,14 @@ service: aws-python3 # NOTE: update this with your service name
 provider:
   name: aws
   runtime: python3.6
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+      Resource: "arn:aws:sqs:us-east-1:*:SQS_principal*"
 
 # you can overwrite defaults here
-stage: production
+stage: dev
 functions:
   inseresqs:
     handler: handler.handler
@@ -13,15 +18,3 @@ functions:
       - http:
           path: /inseresqs
           method: post
-  imprimeMensagens:
-    handler: handler.imprime
-    events:
-      - http:
-          path: /imprime
-          method: get
-  publicaMensagens:
-    handler: handler.publica
-    events:
-      - http:
-          path: /publica
-          method: get
