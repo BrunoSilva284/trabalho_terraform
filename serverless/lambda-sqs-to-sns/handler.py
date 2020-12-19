@@ -9,9 +9,10 @@ def handler(event, context):
     
     #Do array de mensagens do tópico, recebe uma mensagem
     mensagens = sqs.getMessage(1)
-    print(str(mensagens))
     
-    #Itera o array e deleta ela do tópico usando o ReceiptHandle
-    for msg in mensagens['Messages']:
-        #Aqui deve enviar para o SNS e depois excluir
-        sqs.deleteMessage(msg['ReceiptHandle'])
+    if('Messages' in mensagens and len(mensagens['Messages'])>0):
+        for msg in mensagens['Messages']:
+            #Aqui deve enviar para o SNS e depois excluir
+            sqs.deleteMessage(msg['ReceiptHandle'])
+    else:
+        print("nao existem itens para enviar para o SNS")
