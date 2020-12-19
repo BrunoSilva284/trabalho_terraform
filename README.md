@@ -36,6 +36,7 @@ wks=$(terraform workspace show)
 * Navegar até a pasta do S3 e inicia-lo:
 ```sh
 cd S3/
+terraform init
 terraform workspace new $wks
 terraform plan
 terraform apply -auto-approve
