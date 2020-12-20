@@ -1,6 +1,14 @@
 # Trabalho Final Cloud Computing & SRE
 
 >  Documentação do Trabalho de Conclusão da Disciplina CLOUD COMPUTING & SRE  - Prof.: RAFAEL DE FREITAS BARBOSA
+>  
+>  Grupo:
+
+>  Bruno Vinicius
+
+>  Felipe Gonzalez
+
+>  Gabriel Muniz
 
 ## Visão Geral do sistema:
 ![img/visao-geral.JPG](img/visao-geral.JPG)
@@ -11,8 +19,14 @@
 * SNS Email para fila DLQ
  
 ## Serverless:
-* TODO
-* Lambda SNS para envio de email
+* Lambda API Gateway
+* Lambda SQS Print
+ 
+  * Para ler a fila principal e imprimir seu conteúdo
+
+* Lambda SQS to SNS
+ 
+  * Para envio de email lendo da fila DLQ
 
 
 # Passos para rodar a aplicação:
@@ -78,19 +92,16 @@ cd ..
 
 ## Serverless 
 
-(OBS a variavel $wks pode ser informada manualmente conforme o ambiente de trabalho)
+(OBS a variavel $wks pode ser informada manualmente ao invés do ambiente de trabalho, no caso, prod)
 
-* Iniciar as aplicações serverless - lambda-sqs-to-sns: 
+* Iniciar a aplicação serverless - api-gateway:
 ```sh
-cd serverless/lambda-sqs-to-sns
-virtualenv ~/venv
-source ~/venv/bin/activate
+cd apigateway
 pip3 install -r requirements.txt -t layer
 sls deploy --stage prod
-sls invoke -l -f sqsHandler --stage prod
-cd ..
 ```
-* Iniciar as aplicações serverless - lambda-sqs-print:
+
+* Iniciar a aplicação serverless - lambda-sqs-print:
 ```sh
 cd lambda-sqs-print
 pip3 install -r requirements.txt -t layer
@@ -99,9 +110,13 @@ sls invoke -l -f sqsHandler --stage prod
 cd ..
 ```
 
-* Iniciar as aplicações serverless - api-gateway-terraform:
+* Iniciar a aplicação serverless - lambda-sqs-to-sns: 
 ```sh
-cd apigateway
+cd serverless/lambda-sqs-to-sns
+virtualenv ~/venv
+source ~/venv/bin/activate
 pip3 install -r requirements.txt -t layer
 sls deploy --stage prod
+sls invoke -l -f sqsHandler --stage prod
+cd ..
 ```
