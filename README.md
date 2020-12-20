@@ -17,7 +17,7 @@
 
 # Passos para rodar a aplicação:
 
-############### S3 ##################
+## S3
 
 * Realize o clone do seguinte repositório:
 ```sh
@@ -49,7 +49,7 @@ terraform plan
 terraform apply -auto-approve
 cd ..
 ```
-############### Terraforms ##################
+## Terraform
 
 * Iniciar as duas filas SQS e o SNS:
 
@@ -76,7 +76,7 @@ terraform output -json > ../serverless/arns-${wks}.json
 cd ..
 ```
 
-############### ServLess ##################
+## Serverless 
 
 (OBS a variavel $wks pode ser informada manualmente conforme o ambiente de trabalho)
 
