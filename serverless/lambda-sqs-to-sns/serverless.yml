@@ -17,6 +17,10 @@ provider:
         - sqs:ReceiveMessage
         - sqs:SendMessage
       Resource: ${file(../arns-${self:custom.stage}.json):SQS_DLQ_ARN.value}
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource: ${file(../arns-${self:custom.stage}.json):SNS_EMAIL_ARN.value}      
   environment:
     sqs_consulta: ${file(../arns-${self:custom.stage}.json):SQS_DLQ_URL.value}
     sns_dest: ${file(../arns-${self:custom.stage}.json):SNS_EMAIL_ARN.value}
