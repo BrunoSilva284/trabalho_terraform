@@ -86,21 +86,22 @@ cd serverless/lambda-sqs-to-sns
 virtualenv ~/venv
 source ~/venv/bin/activate
 pip3 install -r requirements.txt -t layer
-sls deploy --stage $wks
-sls invoke -l -f sqsHandler --stage $wks
+sls deploy --stage prod
+sls invoke -l -f sqsHandler --stage prod
 cd ..
 ```
 * Iniciar as aplicações serverless - lambda-sqs-print:
 ```sh
 cd lambda-sqs-print
 pip3 install -r requirements.txt -t layer
-sls deploy --stage $wks
-sls invoke -l -f sqsHandler --stage $wks
+sls deploy --stage prod
+sls invoke -l -f sqsHandler --stage prod
+cd ..
 ```
 
 * Iniciar as aplicações serverless - api-gateway-terraform:
 ```sh
 cd apigateway
 pip3 install -r requirements.txt -t layer
-sls deploy --stage $wks
+sls deploy --stage prod
 ```
